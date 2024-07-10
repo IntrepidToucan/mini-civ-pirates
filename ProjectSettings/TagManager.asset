@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Highlightable
   - 
   - 
   - 
@@ -47,6 +47,6 @@ TagManager:
   - name: Land
     uniqueID: 4018152667
     locked: 0
-  - name: Ships
+  - name: Actors
     uniqueID: 3686638771
     locked: 0

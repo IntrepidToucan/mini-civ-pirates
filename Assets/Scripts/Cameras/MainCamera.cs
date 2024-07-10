@@ -8,13 +8,16 @@ namespace Cameras
     [RequireComponent(typeof(CinemachineBrain))]
     public class MainCamera : Singleton<MainCamera>
     {
+        public Camera Camera { get; private set; }
+        
         protected override void Awake()
         {
             persistAcrossScenes = true;
             
             base.Awake();
 
-            GetComponent<Camera>().orthographic = true;
+            Camera = GetComponent<Camera>();
+            Camera.orthographic = true;
         }
     }
 }
