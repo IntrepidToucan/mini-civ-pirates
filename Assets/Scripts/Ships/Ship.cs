@@ -3,19 +3,13 @@ using UnityEngine;
 namespace Ships
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(CapsuleCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Ship : MonoBehaviour
     {
         private void Awake()
         {
-            var sortingLayer = SortingLayer.NameToID("Actors");
-            var spriteRenderer = GetComponent<SpriteRenderer>();
-
-            if (spriteRenderer.sortingLayerID != sortingLayer)
-            {
-                Debug.LogError("Incorrect sorting layer");
-                spriteRenderer.sortingLayerID = sortingLayer;
-            }
+            GetComponent<SpriteRenderer>().sortingLayerID = SortingLayer.NameToID("Actors");
         }
     }
 }

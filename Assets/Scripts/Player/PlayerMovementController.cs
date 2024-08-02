@@ -1,4 +1,5 @@
 using Cameras;
+using Managers;
 using UnityEngine;
 
 namespace Player
@@ -16,7 +17,7 @@ namespace Player
             var panVector = (panCameraValue.sqrMagnitude > 1f ? panCameraValue.normalized : panCameraValue)
                             * (cameraPanSpeed * Time.deltaTime);
             var newPosition = (Vector2)Player.Instance.transform.position + panVector;
-            var tilemapBounds = Player.Instance.WaterTilemap.cellBounds;
+            var tilemapBounds = TileManager.Instance.WaterTilemap.cellBounds;
             var warpCamera = false;
 
             if (newPosition.x < tilemapBounds.xMin)
@@ -41,8 +42,8 @@ namespace Player
 
             if (warpCamera)
             {
-                VirtualCamera.Instance.CineVirtualCamera.OnTargetObjectWarped(Player.Instance.transform,
-                    (Vector3)newPosition -  Player.Instance.transform.position);
+                PlayerFollowCamera.Instance.CineVirtualCamera.OnTargetObjectWarped(Player.Instance.transform,
+                    (Vector3)newPosition - Player.Instance.transform.position);
             }
 
             Player.Instance.transform.position = newPosition;
@@ -50,10 +51,10 @@ namespace Player
         
         public void ZoomCamera(float zoomCameraValue)
         {
-            var newOrthoSize = VirtualCamera.Instance.CineVirtualCamera.m_Lens.OrthographicSize +
+            var newOrthoSize = PlayerFollowCamera.Instance.CineVirtualCamera.m_Lens.OrthographicSize +
                                zoomCameraValue * cameraZoomSpeed * Time.deltaTime;
 
-            VirtualCamera.Instance.CineVirtualCamera.m_Lens.OrthographicSize =
+            PlayerFollowCamera.Instance.CineVirtualCamera.m_Lens.OrthographicSize =
                 Mathf.Clamp(newOrthoSize, cameraOrthoSizeMin, cameraOrthoSizeMax);
         }
     }

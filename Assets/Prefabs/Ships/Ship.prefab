@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4555302906490308602}
   - component: {fileID: 5274970601652306689}
   - component: {fileID: 8238899763597475081}
-  - component: {fileID: 2249139564724207912}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -99,7 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d51ca830ae040489ecfd23019a7732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
 --- !u!70 &8238899763597475081
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -133,32 +131,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.4, y: 1.08}
+  m_Size: {x: 0.66, y: 1.13}
   m_Direction: 0
---- !u!50 &2249139564724207912
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9034670758455105113}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0

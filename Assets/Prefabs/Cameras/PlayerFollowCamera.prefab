@@ -105,10 +105,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5016304543738006464}
   - component: {fileID: 6963600401741256436}
-  - component: {fileID: -4932659955504432157}
-  - component: {fileID: 2599698258537032414}
+  - component: {fileID: -8157366525532846261}
   m_Layer: 0
-  m_Name: VirtualCamera
+  m_Name: PlayerFollowCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +168,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 2762800544122797052}
---- !u!114 &-4932659955504432157
+--- !u!114 &-8157366525532846261
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,19 +180,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412bc143794fd5e4d998225ade26c2ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  persistAcrossScenes: 1
---- !u!114 &2599698258537032414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4810266952101176606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f453f694addf4275988fac205bc91968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BoundingShape2D: {fileID: 0}
-  m_Damping: 0.5
-  m_MaxWindowSize: -1

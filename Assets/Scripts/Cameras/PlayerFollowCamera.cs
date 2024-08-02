@@ -5,14 +5,12 @@ using Utilities;
 namespace Cameras
 {
     [RequireComponent(typeof(CinemachineVirtualCamera))]
-    public class VirtualCamera : Singleton<VirtualCamera>
+    public class PlayerFollowCamera : PersistedSingleton<PlayerFollowCamera>
     {
         public CinemachineVirtualCamera CineVirtualCamera { get; private set; }
         
         protected override void Awake()
         {
-            persistAcrossScenes = true;
-            
             base.Awake();
 
             CineVirtualCamera = GetComponent<CinemachineVirtualCamera>();

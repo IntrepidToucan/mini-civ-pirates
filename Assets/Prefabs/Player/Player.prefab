@@ -13,9 +13,6 @@ GameObject:
   - component: {fileID: 1633196865791404867}
   - component: {fileID: 9146618463692895729}
   - component: {fileID: 1935588747247935599}
-  - component: {fileID: 1959651516583854805}
-  - component: {fileID: 5804402586448757089}
-  - component: {fileID: 3285124837938551801}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -50,9 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48293114f64f6b54d9e2230c9e9620d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  persistAcrossScenes: 1
-  eventSystemPrefab: {fileID: 3347305208341855521, guid: 2b0dab5a8ab5ae542abcc6a123a40cd0, type: 3}
-  virtualCameraPrefab: {fileID: 4810266952101176606, guid: b5b32e00c8099ab429d5d7d2b666f986, type: 3}
+  playerFollowCameraPrefab: {fileID: 4810266952101176606, guid: b5b32e00c8099ab429d5d7d2b666f986, type: 3}
 --- !u!114 &1633196865791404867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,41 +106,3 @@ MonoBehaviour:
   cameraOrthoSizeMax: 10
   cameraPanSpeed: 6
   cameraZoomSpeed: 2
---- !u!114 &1959651516583854805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6730716359692708719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4b5b5a2fd1a66a47bc9e4680a5a25e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5804402586448757089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6730716359692708719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3a5ba92153eed64cbb82e1f0b00ea58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settlementMenuPrefab: {fileID: 4611189314469682455, guid: b44a0be6994e33047af8e8b89dcf895c, type: 3}
---- !u!114 &3285124837938551801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6730716359692708719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 899caa86e429af24fa7a970890694985, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipPrefab: {fileID: 9034670758455105113, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}

@@ -1,7 +1,0 @@
-#root {
-    flex-grow: 0;
-    height: 200px;
-    margin: 0;
-    padding: 20px;
-    width: 200px;
-}
