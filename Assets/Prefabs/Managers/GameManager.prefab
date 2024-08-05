@@ -46,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventSystemPrefab: {fileID: 3347305208341855521, guid: 2b0dab5a8ab5ae542abcc6a123a40cd0, type: 3}
   playerPrefab: {fileID: 6730716359692708719, guid: fab1b8da5eb707a408b3ce4db72573f0, type: 3}
+  resourceManagerPrefab: {fileID: 5383620122515780439, guid: af28fc3d8b6f05c41ab9cefc8f6e972c, type: 3}
   tileManagerPrefab: {fileID: 8755690043620021359, guid: 5da20e88b3ad2c244866e471e19a4803, type: 3}
   uiManagerPrefab: {fileID: 624855737035928870, guid: 11cdb5326c7e67c4c8ac46485fa0ec68, type: 3}

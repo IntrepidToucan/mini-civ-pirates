@@ -16,6 +16,7 @@ namespace Cameras
 
             Camera = GetComponent<Camera>();
             Camera.orthographic = true;
+            Camera.cullingMask = LayerMask.GetMask("Default", "Water", "Ignore Raycast", "UI", "TransparentFX");
         }
     }
 }

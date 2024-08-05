@@ -8,6 +8,7 @@ namespace Managers
         [Header("Prefabs")]
         [SerializeField] private GameObject eventSystemPrefab;
         [SerializeField] private GameObject playerPrefab;
+        [SerializeField] private GameObject resourceManagerPrefab;
         [SerializeField] private GameObject tileManagerPrefab;
         [SerializeField] private GameObject uiManagerPrefab;
 
@@ -17,6 +18,7 @@ namespace Managers
             
             Instantiate(eventSystemPrefab);
             Instantiate(playerPrefab);
+            Instantiate(resourceManagerPrefab);
             Instantiate(tileManagerPrefab);
             Instantiate(uiManagerPrefab);
         }

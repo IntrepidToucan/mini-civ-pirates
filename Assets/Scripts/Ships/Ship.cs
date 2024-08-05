@@ -10,6 +10,7 @@ namespace Ships
         private void Awake()
         {
             GetComponent<SpriteRenderer>().sortingLayerID = SortingLayer.NameToID("Actors");
+            GetComponent<Rigidbody2D>().gravityScale = 0f;
         }
     }
 }

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3038a297596d94aa467530ea529f89, type: 3}
+  m_Name: TileData_Land
+  m_EditorClassIdentifier: 
+  tileType: 0
+  tiles:
+  - {fileID: 11400000, guid: d516f857e3836e943b9e94d0aa31093b, type: 2}
+  - {fileID: 11400000, guid: f4d51ad28162950479bf0fe178c38013, type: 2}
+  - {fileID: 11400000, guid: fb3735c458a886e4aab68e04aea83ea2, type: 2}
+  - {fileID: 11400000, guid: 8785547368ecd9e49ad75c14b219012e, type: 2}
+  - {fileID: 11400000, guid: d273257d82fd7ca428a6bf08355a43df, type: 2}
+  - {fileID: 11400000, guid: e0228c93c6fe8f84ab018f7748aa6250, type: 2}
+  - {fileID: 11400000, guid: ab8b1f1af6c42a2439b4599549cde35c, type: 2}
+  - {fileID: 11400000, guid: aa12ce19a9be9fc4581d5dcf6abfeb46, type: 2}
+  - {fileID: 11400000, guid: e005454807e158a4e868ff3e86fb9371, type: 2}
+  - {fileID: 11400000, guid: bc52751f47f2a924bbfcb6579c8541e1, type: 2}
+  - {fileID: 11400000, guid: b532d982f1489c845a6c075587823109, type: 2}
+  - {fileID: 11400000, guid: a97db5faa7a26464b9153de164fe4e85, type: 2}
+  - {fileID: 11400000, guid: 568934780f3408347b2d4a8ee0e2071a, type: 2}
+  - {fileID: 11400000, guid: 9065b2ab4b7941a448ba6f67632a8862, type: 2}
+  - {fileID: 11400000, guid: fbdfdf9a79d104141af5afe365ea2e9c, type: 2}
+  - {fileID: 11400000, guid: 7d6bf0245ffc0a740a0ae2eb0750f1ee, type: 2}
+  - {fileID: 11400000, guid: f2f10717449a44e44b5d73bebff216f5, type: 2}
+  - {fileID: 11400000, guid: a41e12d2d9087794ba5d1cc1981bd263, type: 2}
+  - {fileID: 11400000, guid: 8c43a58e767d2e242bd78f28027b53ab, type: 2}
+  - {fileID: 11400000, guid: deaa6e28f65998e49872270412848095, type: 2}
+  - {fileID: 11400000, guid: e5f4cf0c9079d614c8c242e38bbea4c0, type: 2}
+  - {fileID: 11400000, guid: 0e5e41f95dc0b784b9984a42a1961109, type: 2}
+  isExplored: 0

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51e0e63316a878428bf4674f7dec1e8, type: 3}
+  m_Name: HarborData_Appletown
+  m_EditorClassIdentifier: 
+  settlementData: {fileID: 11400000, guid: 913e2caee53239d4bbc2a4b7d898d496, type: 2}
+  shipData: {fileID: 11400000, guid: 3a8382928b7f5b64f919c7ee639be1af, type: 2}
