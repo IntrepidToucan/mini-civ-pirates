@@ -1,3 +1,4 @@
+using System;
 using Cameras;
 using Managers;
 using UnityEngine;
@@ -11,7 +12,35 @@ namespace Player
         [SerializeField, Range(0.1f, 12f)] private float cameraOrthoSizeMax = 10f;
         [SerializeField, Range(0.1f, 10f)] private float cameraPanSpeed = 6f;
         [SerializeField, Range(0.1f, 10f)] private float cameraZoomSpeed = 2f;
-        
+
+        private GameObject _activeShip;
+        private Vector3 _targetPos;
+
+        private void Start()
+        {
+            _activeShip = GameObject.Find("Ship_Appletown");
+        }
+
+        private void Update()
+        {
+            var diff = _targetPos - _activeShip.transform.position;
+
+            if (diff.sqrMagnitude < 1) return;
+
+            var rigidBody = _activeShip.GetComponent<Rigidbody2D>();
+            rigidBody.velocity = diff.normalized * 10f;
+            rigidBody.SetRotation(Quaternion.LookRotation(diff));
+        }
+
+        public void HandleSelect(Vector3 mousePos)
+        {
+            var worldPosition = MainCamera.Instance.Camera.ScreenToWorldPoint(mousePos);
+            // var cellPosition = TileManager.Instance.WaterTilemap.layoutGrid.LocalToCell(worldPosition);
+            
+            // Debug.Log(cellPosition);
+            _targetPos = worldPosition;
+        }
+
         public void PanCamera(Vector2 panCameraValue)
         {
             var panVector = (panCameraValue.sqrMagnitude > 1f ? panCameraValue.normalized : panCameraValue)

@@ -1,4 +1,3 @@
-using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,7 +17,7 @@ namespace Player
             _selectAction = Player.Instance.PlayerInput.actions.FindAction("Select");
             _selectAction.performed += context =>
             {
-                TileManager.Instance.HandleSelect(Mouse.current.position.ReadValue());
+                Player.Instance.MovementController.HandleSelect(Mouse.current.position.ReadValue());
             };
         }
 
@@ -27,7 +26,7 @@ namespace Player
             var panCameraValue = _panCameraAction.ReadValue<Vector2>();
             var zoomCameraValue = _zoomCameraAction.ReadValue<float>();
             
-            TileManager.Instance.HandleMousePosition(Mouse.current.position.ReadValue());
+            // TileManager.Instance.HandleMousePosition(Mouse.current.position.ReadValue());
 
             if (panCameraValue != Vector2.zero)
             {

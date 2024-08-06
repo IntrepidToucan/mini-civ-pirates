@@ -50,3 +50,6 @@ TagManager:
   - name: Actors
     uniqueID: 3686638771
     locked: 0
+  - name: FogOfWar
+    uniqueID: 3475653213
+    locked: 0

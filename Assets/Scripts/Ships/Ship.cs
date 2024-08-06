@@ -1,3 +1,5 @@
+using System;
+using Managers;
 using UnityEngine;
 
 namespace Ships
@@ -11,6 +13,11 @@ namespace Ships
         {
             GetComponent<SpriteRenderer>().sortingLayerID = SortingLayer.NameToID("Actors");
             GetComponent<Rigidbody2D>().gravityScale = 0f;
+        }
+
+        private void Update()
+        {
+            TileManager.Instance.ExploreWorldPosition(transform.position);
         }
     }
 }

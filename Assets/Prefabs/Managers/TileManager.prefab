@@ -44,5 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce73737774ada24f897aabe966f56e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 11400000, guid: f22ae7b29e4fcbf4999a70a7b4736488, type: 2}
-  debugTiles: 0
+  fogOfWarTile: {fileID: 11400000, guid: 2f42093bca70ba344ac4bd445e14c5a7, type: 2}
