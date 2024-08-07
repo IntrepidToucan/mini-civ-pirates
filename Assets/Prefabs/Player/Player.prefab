@@ -106,3 +106,4 @@ MonoBehaviour:
   cameraOrthoSizeMax: 10
   cameraPanSpeed: 6
   cameraZoomSpeed: 2
+  debugSelection: 1

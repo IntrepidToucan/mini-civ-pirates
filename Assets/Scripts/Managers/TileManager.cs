@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Utilities;
@@ -11,7 +12,29 @@ namespace Managers
         
         public Tilemap WaterTilemap { get; private set; }
 
+        private List<Grid> _ghostGrids;
         private Tilemap _fogOfWarTilemap;
+
+        public List<Vector3> GetGhostGridPositions(Vector3 worldPos)
+        {
+            var tilemapSize = WaterTilemap.cellBounds.size;
+            var grid = WaterTilemap.layoutGrid;
+            
+            return new List<Vector3>
+            {
+                // Horizontal grids
+                worldPos + grid.transform.right * tilemapSize.x,
+                worldPos + -grid.transform.right * tilemapSize.x,
+                // Vertical grids
+                worldPos + grid.transform.up * tilemapSize.y,
+                worldPos + -grid.transform.up * tilemapSize.y,
+                // Diagonal grids
+                worldPos + grid.transform.up * tilemapSize.y + grid.transform.right * tilemapSize.x,
+                worldPos + grid.transform.up * tilemapSize.y + -grid.transform.right * tilemapSize.x,
+                worldPos + -grid.transform.up * tilemapSize.y + grid.transform.right * tilemapSize.x,
+                worldPos + -grid.transform.up * tilemapSize.y + -grid.transform.right * tilemapSize.x
+            };
+        }
 
         public void ExploreWorldPosition(Vector3 worldPos)
         {
@@ -34,13 +57,25 @@ namespace Managers
                          cellPos + Vector3Int.right * 2,
                      })
             {
+                if (!_fogOfWarTilemap.HasTile(pos)) continue;
+                
                 _fogOfWarTilemap.SetTile(pos, null);
+                
+                var ghostPositions = GetGhostGridPositions(_fogOfWarTilemap.GetCellCenterWorld(pos));
+
+                for (var i = 0; i < _ghostGrids.Count; i++)
+                {
+                    var tilemap = _ghostGrids[i].transform.Find("FogOfWar").GetComponent<Tilemap>();
+                    tilemap.SetTile(tilemap.WorldToCell(ghostPositions[i]), null);
+                }
             }
         }
 
         protected override void Awake()
         {
             base.Awake();
+
+            _ghostGrids = new List<Grid>();
             
             PopulateTilemapVars();
             PopulateTileData();
@@ -71,22 +106,12 @@ namespace Managers
         }
 
         private void CreateGhostGrids() {
-            var tilemapSize = WaterTilemap.cellBounds.size;
             var grid = WaterTilemap.layoutGrid;
-            
-            // Create horizontal grids.
-            Instantiate(grid, grid.transform.position + grid.transform.right * tilemapSize.x, grid.transform.rotation);
-            Instantiate(grid, grid.transform.position + -grid.transform.right * tilemapSize.x, grid.transform.rotation);
-            
-            // Create vertical grids.
-            Instantiate(grid, grid.transform.position + grid.transform.up * tilemapSize.y, grid.transform.rotation);
-            Instantiate(grid, grid.transform.position + -grid.transform.up * tilemapSize.y, grid.transform.rotation);
-            
-            // Create diagonal grids.
-            Instantiate(grid, grid.transform.position + grid.transform.up * tilemapSize.y + grid.transform.right * tilemapSize.x, grid.transform.rotation);
-            Instantiate(grid, grid.transform.position + grid.transform.up * tilemapSize.y + -grid.transform.right * tilemapSize.x, grid.transform.rotation);
-            Instantiate(grid, grid.transform.position + -grid.transform.up * tilemapSize.y + grid.transform.right * tilemapSize.x, grid.transform.rotation);
-            Instantiate(grid, grid.transform.position + -grid.transform.up * tilemapSize.y + -grid.transform.right * tilemapSize.x, grid.transform.rotation);
+
+            foreach (var pos in GetGhostGridPositions(grid.transform.position))
+            {
+                _ghostGrids.Add(Instantiate(grid, pos, grid.transform.rotation));
+            }
         }
     }
 }

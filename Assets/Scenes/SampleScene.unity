@@ -152,6 +152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 597668934}
+  - {fileID: 1968290927}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &597668933
@@ -188,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9034670758455105113, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}
       propertyPath: m_Name
-      value: Ship_Appletown
+      value: Ship1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12738,6 +12739,52 @@ Transform:
   - {fileID: 1430683399}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1968290926
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 383264943}
+    m_Modifications:
+    - target: {fileID: 405806245361938392, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.7618935
+      objectReference: {fileID: 0}
+    - target: {fileID: 405806245361938392, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0334301
+      objectReference: {fileID: 0}
+    - target: {fileID: 405806245361938392, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 405806245361938392, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 405806245361938392, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 405806245361938392, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034670758455105113, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}
+      propertyPath: m_Name
+      value: Ship2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}
+--- !u!4 &1968290927 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 405806245361938392, guid: 2c4ce690e18aa21458f64459eca002bd, type: 3}
+  m_PrefabInstance: {fileID: 1968290926}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2114388961
 GameObject:
   m_ObjectHideFlags: 0
