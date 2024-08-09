@@ -9,7 +9,7 @@ namespace Player
     {
         [Header("Camera Movement")]
         [SerializeField, Range(0.1f, 10f)] private float cameraOrthoSizeMin = 3f;
-        [SerializeField, Range(0.1f, 12f)] private float cameraOrthoSizeMax = 10f;
+        [SerializeField, Range(0.1f, 12f)] private float cameraOrthoSizeMax = 8f;
         [SerializeField, Range(0.1f, 10f)] private float cameraPanSpeed = 6f;
         [SerializeField, Range(0.1f, 10f)] private float cameraZoomSpeed = 2f;
         
@@ -49,7 +49,7 @@ namespace Player
             
             if (_activeObject.TryGetComponent<Ship>(out var ship))
             {
-                var worldPos = MainCamera.Instance.Camera.ScreenToWorldPoint(mousePos);
+                var worldPos = TileManager.Instance.GetNormalizedWorldPositionForMouse(mousePos);
                 ship.SetTargetPosition(worldPos);
             }
             else

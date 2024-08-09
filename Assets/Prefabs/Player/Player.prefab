@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraOrthoSizeMin: 3
-  cameraOrthoSizeMax: 10
+  cameraOrthoSizeMax: 8
   cameraPanSpeed: 6
   cameraZoomSpeed: 2
-  debugSelection: 1
+  debugSelection: 0

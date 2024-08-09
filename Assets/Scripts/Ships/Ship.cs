@@ -13,10 +13,7 @@ namespace Ships
         private Rigidbody2D _rigidBody;
         private Vector3 _targetPos;
 
-        public void SetTargetPosition(Vector3 pos)
-        {
-            _targetPos = pos;
-        }
+        public void SetTargetPosition(Vector3 pos) => _targetPos = pos;
         
         private void Awake()
         {
@@ -25,7 +22,7 @@ namespace Ships
             _rigidBody = GetComponent<Rigidbody2D>();
             _rigidBody.gravityScale = 0f;
 
-            _ghosts = new List<GameObject>();
+            _ghosts = transform.parent?.gameObject.GetComponent<Ship>() ? null : new List<GameObject>();
             _targetPos = transform.position;
         }
 
@@ -34,26 +31,44 @@ namespace Ships
             if (IsGhost())
             {
                 _rigidBody.bodyType = RigidbodyType2D.Static;
-                GetComponent<CapsuleCollider2D>().enabled = false;
                 return;
             }
             
             CreateGhostActors();
-            
-            TileManager.Instance.ExploreWorldPosition(transform.position);
+            UpdatePosition();
         }
 
         private void Update()
         {
             if (IsGhost()) return;
             
-            var diff = _targetPos - transform.position;
+            UpdatePosition();
+        }
 
-            if (diff.sqrMagnitude < 1) return;
+        private void OnDrawGizmos()
+        {
+            if (IsGhost()) return;
+            
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, _targetPos);
+            Gizmos.DrawWireSphere(_targetPos, 0.5f);
+        }
 
-            _rigidBody.velocity = diff.normalized * 5f;
-            _rigidBody.SetRotation(Quaternion.LookRotation(diff));
+        private bool IsGhost() => _ghosts == null;
 
+        private void CreateGhostActors()
+        {
+            foreach (var pos in TileManager.Instance.GetGhostGridPositions(transform.position))
+            {
+                _ghosts.Add(Instantiate(_ghosts.Count > 0 ? _ghosts[0] : gameObject,
+                    pos, transform.rotation, transform));
+            }
+        }
+
+        private void UpdatePosition()
+        {
+            TileManager.Instance.ExploreWorldPosition(transform.position);
+            
             var ghostPositions = TileManager.Instance.GetGhostGridPositions(transform.position);
 
             for (var i = 0; i < _ghosts.Count; i++)
@@ -62,22 +77,14 @@ namespace Ships
                 _ghosts[i].transform.rotation = transform.rotation;
             }
             
-            TileManager.Instance.ExploreWorldPosition(transform.position);
-        }
+            var diff = (Vector3)(Vector2)(_targetPos - transform.position);
 
-        private void CreateGhostActors()
-        {
-            foreach (var pos in TileManager.Instance.GetGhostGridPositions(transform.position))
-            {
-                _ghosts.Add(Instantiate(gameObject, pos, transform.rotation));
-            }
-        }
+            if (diff.sqrMagnitude < 0.01) return;
 
-        private bool IsGhost()
-        {
-            var mainTilemap = TileManager.Instance.WaterTilemap;
-
-            return !mainTilemap.HasTile(mainTilemap.WorldToCell(transform.position));
+            transform.position += diff.normalized * 5f * Time.deltaTime;
+            
+            var angle = (Mathf.Atan2(diff.y, diff.x) - Mathf.Atan2(-1, 0)) * Mathf.Rad2Deg;
+            transform.eulerAngles = new Vector3(0, 0,  angle < 0 ? 360 + angle : angle);
         }
     }
 }

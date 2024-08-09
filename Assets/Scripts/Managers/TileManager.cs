@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cameras;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Utilities;
@@ -7,6 +8,9 @@ namespace Managers
 {
     public class TileManager : PersistedSingleton<TileManager>
     {
+        [Header("Debug")]
+        [SerializeField] private bool debugUtils;
+        
         [Header("Tiles")]
         [SerializeField] private TileBase fogOfWarTile;
         
@@ -34,6 +38,36 @@ namespace Managers
                 worldPos + -grid.transform.up * tilemapSize.y + grid.transform.right * tilemapSize.x,
                 worldPos + -grid.transform.up * tilemapSize.y + -grid.transform.right * tilemapSize.x
             };
+        }
+
+        public Vector3 GetNormalizedWorldPositionForMouse(Vector3 mousePos)
+        {
+            var rawWorldPos = MainCamera.Instance.Camera.ScreenToWorldPoint(mousePos);
+            var result = new Vector3(rawWorldPos.x, rawWorldPos.y, 0f);
+            var tilemapBounds = WaterTilemap.cellBounds;
+
+            if (result.x < tilemapBounds.xMin)
+            {
+                result.x += tilemapBounds.size.x;
+            } else if (result.x > tilemapBounds.xMax)
+            {
+                result.x -= tilemapBounds.size.x;
+            }
+            
+            if (result.y < tilemapBounds.yMin)
+            {
+                result.y += tilemapBounds.size.y;
+            } else if (result.y > tilemapBounds.yMax)
+            {
+                result.y -= tilemapBounds.size.y;
+            }
+
+            if (debugUtils)
+            {
+                Debug.Log($"World pos raw: {rawWorldPos}, normalized: {result}");
+            }
+            
+            return result;
         }
 
         public void ExploreWorldPosition(Vector3 worldPos)
