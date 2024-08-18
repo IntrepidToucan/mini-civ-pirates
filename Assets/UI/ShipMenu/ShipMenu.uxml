@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/ShipMenu/ShipMenu.uss?fileID=7433441132597879392&amp;guid=5db5e0e9acbfee6449f8a83caa393ddb&amp;type=3#ShipMenu" />
+    <ui:VisualElement name="ship-menu" style="background-image: url(&quot;project://database/Assets/Art/Prototype/FantasyUIBorders/PNG/Double/Border/panel-border-010.png?fileID=21300000&amp;guid=c2132a284a65363458aa34cb1fb7acb7&amp;type=3#panel-border-010&quot;);">
+        <ui:VisualElement name="ship-menu-title-container">
+            <ui:VisualElement name="ship-menu-icon" style="background-image: url(&quot;project://database/Assets/Art/Prototype/GameIconsNet/ship-wheel.png?fileID=2800000&amp;guid=4ad0d9dc8b135fb4e8ed3270acb68f3b&amp;type=3#ship-wheel&quot;);" />
+            <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ship-menu-title" />
+        </ui:VisualElement>
+        <ui:VisualElement name="ship-menu-food-container">
+            <ui:Label tabindex="-1" text="Food" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ship-menu-food-label" />
+            <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ship-menu-food-count" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

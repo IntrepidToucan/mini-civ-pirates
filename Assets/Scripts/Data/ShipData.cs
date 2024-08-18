@@ -8,7 +8,8 @@ namespace Data
     {
         public string inGameName = string.Empty;
         public OwningPlayer owner = OwningPlayer.None;
-        
         public ShipSize size = ShipSize.Small;
+        
+        public int food = 100;
     }
 }

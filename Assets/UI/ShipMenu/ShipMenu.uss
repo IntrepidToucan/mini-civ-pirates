@@ -1,0 +1,39 @@
+#ship-menu {
+    background-color: rgba(0, 28, 156, 0.96);
+    color: rgb(255, 255, 255);
+    height: 300px;
+    justify-content: space-between;
+    margin-left: 24px;
+    margin-top: 24px;
+    padding: 36px;
+    width: 600px;
+}
+
+#ship-menu-title-container {
+    align-items: center;
+    flex-direction: row;
+}
+
+#ship-menu-icon {
+    height: 48px;
+    margin-right: 16px;
+    width: 48px;
+}
+
+#ship-menu-title {
+    font-size: 36px;
+}
+
+#ship-menu-food-container {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#ship-menu-food-label {
+    font-size: 30px;
+    -unity-font-style: bold;
+}
+
+#ship-menu-food-count {
+    font-size: 30px;
+}

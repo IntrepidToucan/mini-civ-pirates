@@ -40,34 +40,9 @@ namespace Managers
             };
         }
 
-        public Vector3 GetNormalizedWorldPositionForMouse(Vector3 mousePos)
+        public Vector3Int GetCellPositionForMouse(Vector3 mousePos)
         {
-            var rawWorldPos = MainCamera.Instance.Camera.ScreenToWorldPoint(mousePos);
-            var result = new Vector3(rawWorldPos.x, rawWorldPos.y, 0f);
-            var tilemapBounds = WaterTilemap.cellBounds;
-
-            if (result.x < tilemapBounds.xMin)
-            {
-                result.x += tilemapBounds.size.x;
-            } else if (result.x > tilemapBounds.xMax)
-            {
-                result.x -= tilemapBounds.size.x;
-            }
-            
-            if (result.y < tilemapBounds.yMin)
-            {
-                result.y += tilemapBounds.size.y;
-            } else if (result.y > tilemapBounds.yMax)
-            {
-                result.y -= tilemapBounds.size.y;
-            }
-
-            if (debugUtils)
-            {
-                Debug.Log($"World pos raw: {rawWorldPos}, normalized: {result}");
-            }
-            
-            return result;
+            return WaterTilemap.WorldToCell(GetNormalizedWorldPositionForMouse(mousePos));
         }
 
         public void ExploreWorldPosition(Vector3 worldPos)
@@ -146,6 +121,36 @@ namespace Managers
             {
                 _ghostGrids.Add(Instantiate(grid, pos, grid.transform.rotation));
             }
+        }
+        
+        private Vector3 GetNormalizedWorldPositionForMouse(Vector3 mousePos)
+        {
+            var rawWorldPos = MainCamera.Instance.Camera.ScreenToWorldPoint(mousePos);
+            var result = new Vector3(rawWorldPos.x, rawWorldPos.y, 0f);
+            var tilemapBounds = WaterTilemap.cellBounds;
+
+            if (result.x < tilemapBounds.xMin)
+            {
+                result.x += tilemapBounds.size.x;
+            } else if (result.x > tilemapBounds.xMax)
+            {
+                result.x -= tilemapBounds.size.x;
+            }
+            
+            if (result.y < tilemapBounds.yMin)
+            {
+                result.y += tilemapBounds.size.y;
+            } else if (result.y > tilemapBounds.yMax)
+            {
+                result.y -= tilemapBounds.size.y;
+            }
+
+            if (debugUtils)
+            {
+                Debug.Log($"World pos raw: {rawWorldPos}, normalized: {result}");
+            }
+            
+            return result;
         }
     }
 }

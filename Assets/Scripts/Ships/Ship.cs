@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Data;
 using Managers;
 using UnityEngine;
 
@@ -9,38 +11,61 @@ namespace Ships
     [RequireComponent(typeof(SpriteRenderer))]
     public class Ship : MonoBehaviour
     {
+        [Header("Data")]
+        [SerializeField] private ShipData shipData;
+        
         private List<GameObject> _ghosts;
         private Rigidbody2D _rigidBody;
-        private Vector3 _targetPos;
+        private Vector3Int _targetCell;
 
-        public void SetTargetPosition(Vector3 pos) => _targetPos = pos;
+        public string GetInGameName() => shipData.inGameName;
+        public int GetFood() => shipData.food;
+        
+        public void SetTargetCell(Vector3Int pos) => _targetCell = pos;
         
         private void Awake()
         {
             GetComponent<SpriteRenderer>().sortingLayerID = SortingLayer.NameToID("Actors");
+
+            shipData = Instantiate(shipData);
             
             _rigidBody = GetComponent<Rigidbody2D>();
             _rigidBody.gravityScale = 0f;
 
             _ghosts = transform.parent?.gameObject.GetComponent<Ship>() ? null : new List<GameObject>();
-            _targetPos = transform.position;
         }
 
         private void Start()
         {
+            _targetCell = TileManager.Instance.WaterTilemap.WorldToCell(transform.position);
+            
             if (IsGhost())
             {
                 _rigidBody.bodyType = RigidbodyType2D.Static;
                 return;
             }
             
+            _rigidBody.bodyType = RigidbodyType2D.Kinematic;
+            
             CreateGhostActors();
             UpdatePosition();
         }
 
+        private float _foodCountdown;
+
         private void Update()
         {
             if (IsGhost()) return;
+            if (shipData.food <= 0) return;
+            
+            _foodCountdown += Time.deltaTime;
+
+            if (_foodCountdown >= 2f)
+            {
+                shipData.food = Math.Max(shipData.food - 1, 0);
+                EventManager.TriggerShipFoodChange(this, shipData.food);
+                _foodCountdown = 0f;
+            }
             
             UpdatePosition();
         }
@@ -48,10 +73,13 @@ namespace Ships
         private void OnDrawGizmos()
         {
             if (IsGhost()) return;
+            if (TileManager.Instance == null) return;
+            
+            var worldPos = TileManager.Instance.WaterTilemap.CellToWorld(_targetCell);
             
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, _targetPos);
-            Gizmos.DrawWireSphere(_targetPos, 0.5f);
+            Gizmos.DrawLine(transform.position, worldPos);
+            Gizmos.DrawWireSphere(worldPos, 0.5f);
         }
 
         private bool IsGhost() => _ghosts == null;
@@ -77,7 +105,7 @@ namespace Ships
                 _ghosts[i].transform.rotation = transform.rotation;
             }
             
-            var diff = (Vector3)(Vector2)(_targetPos - transform.position);
+            var diff = (Vector3)(Vector2)(TileManager.Instance.WaterTilemap.GetCellCenterWorld(_targetCell) - transform.position);
 
             if (diff.sqrMagnitude < 0.01) return;
 

@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f88928f7feaf04293f903761a7e020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shipMenuPrefab: {fileID: 3005932316895337786, guid: ca8fa4ffcbd87df4182b22c612d4313e, type: 3}

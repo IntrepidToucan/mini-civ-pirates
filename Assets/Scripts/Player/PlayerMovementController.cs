@@ -37,6 +37,8 @@ namespace Player
                 }
                 
                 _activeObject = hit.transform.gameObject;
+                EventManager.TriggerActiveObjectChange(_activeObject);
+                
                 return;
             }
 
@@ -49,8 +51,8 @@ namespace Player
             
             if (_activeObject.TryGetComponent<Ship>(out var ship))
             {
-                var worldPos = TileManager.Instance.GetNormalizedWorldPositionForMouse(mousePos);
-                ship.SetTargetPosition(worldPos);
+                var cellPos = TileManager.Instance.GetCellPositionForMouse(mousePos);
+                ship.SetTargetCell(cellPos);
             }
             else
             {
