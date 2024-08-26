@@ -35,8 +35,15 @@ namespace Player
                 {
                     Debug.Log($"Hit actor: {hit.transform.gameObject.name}");
                 }
+
+                var newActiveObject = hit.transform.gameObject;
+
+                if (newActiveObject.TryGetComponent<Ship>(out var hitShip))
+                {
+                    newActiveObject = hitShip.GetMainShip().gameObject;
+                }
                 
-                _activeObject = hit.transform.gameObject;
+                _activeObject = newActiveObject;
                 EventManager.TriggerActiveObjectChange(_activeObject);
                 
                 return;

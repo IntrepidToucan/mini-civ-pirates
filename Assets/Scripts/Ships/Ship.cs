@@ -20,6 +20,7 @@ namespace Ships
 
         public string GetInGameName() => shipData.inGameName;
         public int GetFood() => shipData.food;
+        public Ship GetMainShip() => IsGhost() ? transform.parent.gameObject.GetComponent<Ship>() : this;
         
         public void SetTargetCell(Vector3Int pos) => _targetCell = pos;
         
@@ -95,7 +96,8 @@ namespace Ships
 
         private void UpdatePosition()
         {
-            TileManager.Instance.ExploreWorldPosition(transform.position);
+            TryNormalizePosition();
+            TileManager.Instance.ReportWorldPosition(gameObject, transform.position);
             
             var ghostPositions = TileManager.Instance.GetGhostGridPositions(transform.position);
 
@@ -105,7 +107,8 @@ namespace Ships
                 _ghosts[i].transform.rotation = transform.rotation;
             }
             
-            var diff = (Vector3)(Vector2)(TileManager.Instance.WaterTilemap.GetCellCenterWorld(_targetCell) - transform.position);
+            var diff = (Vector3)(Vector2)(TileManager.Instance.WaterTilemap.GetCellCenterWorld(
+                TileManager.Instance.GetNextCellPosition(gameObject, _targetCell)) - transform.position);
 
             if (diff.sqrMagnitude < 0.01) return;
 
@@ -113,6 +116,32 @@ namespace Ships
             
             var angle = (Mathf.Atan2(diff.y, diff.x) - Mathf.Atan2(-1, 0)) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, 0,  angle < 0 ? 360 + angle : angle);
+        }
+
+        private void TryNormalizePosition()
+        {
+            var tilemapBounds = TileManager.Instance.WaterTilemap.cellBounds;
+            var normalizedPosition = transform.position;
+
+            if (transform.position.x < tilemapBounds.xMin)
+            {
+                normalizedPosition.x += tilemapBounds.size.x;
+            }
+            else if (transform.position.x > tilemapBounds.xMax)
+            {
+                normalizedPosition.x -= tilemapBounds.size.x;
+            }
+
+            if (transform.position.y < tilemapBounds.yMin)
+            {
+                normalizedPosition.y += tilemapBounds.size.y;
+            }
+            else if (transform.position.y > tilemapBounds.yMax)
+            {
+                normalizedPosition.y -= tilemapBounds.size.y;
+            }
+
+            transform.position = normalizedPosition;
         }
     }
 }

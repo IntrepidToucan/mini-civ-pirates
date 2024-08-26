@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Cameras;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Utilities;
@@ -18,6 +19,9 @@ namespace Managers
 
         private List<Grid> _ghostGrids;
         private Tilemap _fogOfWarTilemap;
+
+        private Dictionary<GameObject, Vector3Int> _actorPositionDictionary;
+        private Dictionary<Vector3Int, GameObject> _positionActorDictionary;
 
         public List<Vector3> GetGhostGridPositions(Vector3 worldPos)
         {
@@ -42,42 +46,59 @@ namespace Managers
 
         public Vector3Int GetCellPositionForMouse(Vector3 mousePos)
         {
-            return WaterTilemap.WorldToCell(GetNormalizedWorldPositionForMouse(mousePos));
+            return WaterTilemap.WorldToCell(
+                GetNormalizedWorldPosition(MainCamera.Instance.Camera.ScreenToWorldPoint(mousePos)));
         }
 
-        public void ExploreWorldPosition(Vector3 worldPos)
+        public Vector3Int GetNextCellPosition(GameObject actor, Vector3Int targetCell)
         {
-            var cellPos = _fogOfWarTilemap.WorldToCell(worldPos);
+            return targetCell;
+        }
+        
+        public Vector3 GetNormalizedWorldPosition(Vector3 rawWorldPos)
+        {
+            var result = new Vector3(rawWorldPos.x, rawWorldPos.y, 0f);
+            var tilemapBounds = WaterTilemap.cellBounds;
 
-            foreach (var pos in new[]
-                     {
-                         cellPos,
-                         cellPos + Vector3Int.up,
-                         cellPos + Vector3Int.down,
-                         cellPos + Vector3Int.left,
-                         cellPos + Vector3Int.right,
-                         cellPos + Vector3Int.up + Vector3Int.left,
-                         cellPos + Vector3Int.up + Vector3Int.right,
-                         cellPos + Vector3Int.down + Vector3Int.left,
-                         cellPos + Vector3Int.down + Vector3Int.right,
-                         cellPos + Vector3Int.up * 2,
-                         cellPos + Vector3Int.down * 2,
-                         cellPos + Vector3Int.left * 2,
-                         cellPos + Vector3Int.right * 2,
-                     })
+            if (result.x < tilemapBounds.xMin)
             {
-                if (!_fogOfWarTilemap.HasTile(pos)) continue;
-                
-                _fogOfWarTilemap.SetTile(pos, null);
-                
-                var ghostPositions = GetGhostGridPositions(_fogOfWarTilemap.GetCellCenterWorld(pos));
-
-                for (var i = 0; i < _ghostGrids.Count; i++)
-                {
-                    var tilemap = _ghostGrids[i].transform.Find("FogOfWar").GetComponent<Tilemap>();
-                    tilemap.SetTile(tilemap.WorldToCell(ghostPositions[i]), null);
-                }
+                result.x += tilemapBounds.size.x;
             }
+            else if (result.x > tilemapBounds.xMax)
+            {
+                result.x -= tilemapBounds.size.x;
+            }
+
+            if (result.y < tilemapBounds.yMin)
+            {
+                result.y += tilemapBounds.size.y;
+            }
+            else if (result.y > tilemapBounds.yMax)
+            {
+                result.y -= tilemapBounds.size.y;
+            }
+
+            if (debugUtils)
+            {
+                Debug.Log($"World pos raw: {rawWorldPos}, normalized: {result}");
+            }
+
+            return result;
+        }
+
+        public void ReportWorldPosition(GameObject actor, Vector3 worldPos)
+        {
+            var cellPos = WaterTilemap.WorldToCell(worldPos);
+
+            if (_actorPositionDictionary.TryGetValue(actor, out var prevCellPos))
+            {
+                _positionActorDictionary.Remove(prevCellPos);
+            }
+
+            _actorPositionDictionary[actor] = cellPos;
+            _positionActorDictionary[cellPos] = actor;
+            
+            RevealMap(worldPos);
         }
 
         protected override void Awake()
@@ -85,6 +106,8 @@ namespace Managers
             base.Awake();
 
             _ghostGrids = new List<Grid>();
+            _actorPositionDictionary = new Dictionary<GameObject, Vector3Int>();
+            _positionActorDictionary = new Dictionary<Vector3Int, GameObject>();
             
             PopulateTilemapVars();
             PopulateTileData();
@@ -122,35 +145,40 @@ namespace Managers
                 _ghostGrids.Add(Instantiate(grid, pos, grid.transform.rotation));
             }
         }
-        
-        private Vector3 GetNormalizedWorldPositionForMouse(Vector3 mousePos)
+
+        private void RevealMap(Vector3 worldPos)
         {
-            var rawWorldPos = MainCamera.Instance.Camera.ScreenToWorldPoint(mousePos);
-            var result = new Vector3(rawWorldPos.x, rawWorldPos.y, 0f);
-            var tilemapBounds = WaterTilemap.cellBounds;
+            var cellPos = _fogOfWarTilemap.WorldToCell(worldPos);
 
-            if (result.x < tilemapBounds.xMin)
+            foreach (var pos in new[]
+                     {
+                         cellPos,
+                         cellPos + Vector3Int.up,
+                         cellPos + Vector3Int.down,
+                         cellPos + Vector3Int.left,
+                         cellPos + Vector3Int.right,
+                         cellPos + Vector3Int.up + Vector3Int.left,
+                         cellPos + Vector3Int.up + Vector3Int.right,
+                         cellPos + Vector3Int.down + Vector3Int.left,
+                         cellPos + Vector3Int.down + Vector3Int.right,
+                         cellPos + Vector3Int.up * 2,
+                         cellPos + Vector3Int.down * 2,
+                         cellPos + Vector3Int.left * 2,
+                         cellPos + Vector3Int.right * 2,
+                     })
             {
-                result.x += tilemapBounds.size.x;
-            } else if (result.x > tilemapBounds.xMax)
-            {
-                result.x -= tilemapBounds.size.x;
-            }
-            
-            if (result.y < tilemapBounds.yMin)
-            {
-                result.y += tilemapBounds.size.y;
-            } else if (result.y > tilemapBounds.yMax)
-            {
-                result.y -= tilemapBounds.size.y;
-            }
+                if (!_fogOfWarTilemap.HasTile(pos)) continue;
+                
+                _fogOfWarTilemap.SetTile(pos, null);
+                
+                var ghostPositions = GetGhostGridPositions(_fogOfWarTilemap.GetCellCenterWorld(pos));
 
-            if (debugUtils)
-            {
-                Debug.Log($"World pos raw: {rawWorldPos}, normalized: {result}");
+                for (var i = 0; i < _ghostGrids.Count; i++)
+                {
+                    var tilemap = _ghostGrids[i].transform.Find("FogOfWar").GetComponent<Tilemap>();
+                    tilemap.SetTile(tilemap.WorldToCell(ghostPositions[i]), null);
+                }
             }
-            
-            return result;
         }
     }
 }
